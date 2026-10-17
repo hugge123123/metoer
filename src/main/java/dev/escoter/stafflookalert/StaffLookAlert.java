@@ -7,7 +7,7 @@ import meteordevelopment.meteorclient.settings.StringSetting;
 import meteordevelopment.meteorclient.settings.Setting;
 import meteordevelopment.meteorclient.settings.SettingGroup;
 import meteordevelopment.meteorclient.systems.modules.Module;
-import meteordevelopment.meteorclient.systems.modules.Category;
+import meteordevelopment.meteorclient.systems.modules.Categories;
 import meteordevelopment.orbit.EventHandler;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.sound.SoundEvents;
@@ -40,7 +40,7 @@ public class StaffLookAlert extends Module {
     private long lastAlertTime = 0L;
 
     public StaffLookAlert() {
-        super(Category.Misc, "staff-look-alert", "Warns when a player on your watch list appears to look toward you.");
+        super(Categories.Misc, "staff-look-alert", "Warns when a player on your watch list appears to look toward you.");
     }
 
     @EventHandler
@@ -53,7 +53,7 @@ public class StaffLookAlert extends Module {
 
         for (AbstractClientPlayerEntity other : mc.world.getPlayers()) {
             if (other == mc.player) continue;
-            String name = other.getGameProfile().getName();
+            String name = other.getName().getString();
             if (name == null || !isWatched(configured, name)) continue;
             Vec3d toMe = myPos.subtract(other.getEyePos());
             double distance = toMe.length();
